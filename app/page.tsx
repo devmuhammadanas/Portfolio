@@ -1,65 +1,71 @@
-import Image from "next/image";
+import DetailsButton from '@/src/components/common/detailsButton'
+import HeroButton from '@/src/components/common/HeroButton'
+import React from 'react'
 
-export default function Home() {
+const page = () => {
+  const searchText = [
+    {
+      text: 'About Me',
+      icon: 'about',
+    },
+    {
+      text: 'Skills',
+      icon: 'about',
+    },
+    {
+      text: 'Projects',
+      icon: 'about',
+    },
+    {
+      text: 'Experience',
+      icon: 'about',
+    },
+    {
+      text: 'Contact',
+      icon: 'about',
+    },
+  ]
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className='grow shrink-0  basis-auto w-[80%] mx-auto'>
+      <div className='container px-4 py-8 flex-1 flex flex-col justify-center items-center'>
+        <p className='text-[#C6C9CC] font-geist px-4 py-1 font-medium bg-[#232323] rounded-full border border-[#343434]'>Hello!</p>
+      <h1 className='text-[4rem] font-unbounded leading-[75px] font-bold text-primary'>I&apos;m <span className='text-secondary'>DevAnas</span></h1>
+      <p className='text-[4rem] font-unbounded leading-[75px] font-bold text-primary'>Full-Stack Developer</p>
+      </div>
+
+      <div className='flex justify-between'>
+        <div className='w-64.5 flex-col gap-4 flex items-start'>
+          <p className='text-primary font-geist text-[13px] leading-5 font-normal italic'>David is the secret weapon for any modern SaaS, he transformed our complex ideas into a high performance reality.</p>
+          <p className='text-primary font-geist text-[16px] leading-5 font-normal'>Marc Hawkins - Adobe Director</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+
+      <div className='flex flex-col gap-4 w-64.5 justify-end items-end border-red-500'>
+        <HeroButton text='More About Me' backGround='bg-secondary mr-8' textColor='text-primary'/>
+        <HeroButton text='See My Work'  textColor='text-secondary' ButtonBorder='border border-secondary'/>
+      </div>
+      
+      </div>
+
+
+      <div className='flex flex-col mt-20 gap-1.5 rounded-3xl border border-[#343434] px-2.5 pb-5 pt-[15px] bg-[#252525]'>
+        <div className='flex items-center flex-1 px-2 py-2'>
+          <input type='text' placeholder='Try About, Skills, Experience, Projects' className='w-full bg-transparent   px-4 py-2 text-primary font-geist text-4 leading-5 font-normal outline-none border-none'/>
+          <div className='px-4 py-4 bg-secondary rounded-full'></div>
         </div>
-      </main>
-    </div>
-  );
+
+        <div className='flex-1 flex gap-5 px-2 py-2'>
+          {
+            searchText.map((item, index) => (
+              <div key={index}>
+                <DetailsButton text={item.text}/>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </main>
+  )
 }
+
+export default page
