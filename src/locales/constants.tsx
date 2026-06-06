@@ -25,3 +25,12 @@ export const footerContent = {
     text : "DevAnas. All rights reserved."
 }
 
+
+export const portfolioData = {
+    about: "I am a Full Stack Developer...",
+    skills: "React, Next.js, Node.js...",
+    projects: "E-commerce App...",
+    clients: "Worked with 10+ clients...",
+    experience: "Full Stack Developer at Exeonic...",
+    contact: "anas@gmail.com",
+  };

@@ -29,11 +29,11 @@ const page = () => {
           <p className="text-danger font-geist px-4 py-1 font-medium bg-primaryBackGround rounded-full border border-primaryBorder">
             {heroContent.greeting}
           </p>
-          <h1 className="text-[4rem] font-unbounded leading-[75px] font-bold text-primary">
+          <h1 className="text-[4rem] font-unbounded leading-18.75 font-bold text-primary">
             {heroContent.text}{" "}
             <span className="text-secondary">{heroContent.name}</span>
           </h1>
-          <p className="text-[4rem] font-unbounded leading-[75px] font-bold text-primary">
+          <p className="text-[4rem] font-unbounded leading-18.75 font-bold text-primary">
             {heroContent.role}
           </p>
         </div>

@@ -13,22 +13,27 @@ const SearchBar = () => {
         {
           text: searchBottonText.about,
           icon: IoIosDocument ,
+          value: 'about'
         },
         {
           text: searchBottonText.skills,
           icon: IoMdSettings,
+          value: 'skills'
         },
         {
           text: searchBottonText.projects,
           icon: SiPolymerproject,
+          value: 'projects'
         },
         {
           text: searchBottonText.experience,
           icon: MdGroups2,
+          value: 'experience'
         },
         {
           text: searchBottonText.contact,
           icon: IoMdMail,
+          value: 'contact'
         },
       ];
   return (
@@ -49,7 +54,7 @@ const SearchBar = () => {
           {
              return(
             <div key={index}>
-              <DetailsButton text={item.text} Icon={item.icon} />
+              <DetailsButton text={item.text} Icon={item.icon} sectionType={item.value} />
             </div>
           )})}
         </div>

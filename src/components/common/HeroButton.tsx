@@ -9,17 +9,24 @@ type HeroButtonProps = {
   openDetails?: (topic: string) => void;
 };
 
-const HeroButton = ({ text, backGround = true, textColor, ButtonBorder = true, openDetails, sectionValue } : HeroButtonProps) => {
+const HeroButton = ({
+  text,
+  backGround = true,
+  textColor,
+  ButtonBorder = true,
+  openDetails,
+  sectionValue,
+}: HeroButtonProps) => {
   return (
     <>
       <button
-      onClick={() => openDetails?.(sectionValue)}
-        className={`${backGround ? 'bg-secondary' : 'bg-none'} ${textColor} ${ButtonBorder ? 'border-secondary border' : 'border-none'}
-  group relative overflow-hidden
-  px-7 py-2.5
-  font-unbounded
-  rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl
-  cursor-pointer text-[14px] leading-5 font-normal`}
+        onClick={() => openDetails?.(sectionValue)}
+        className={`${backGround ? "bg-secondary" : "bg-none"} ${textColor} ${ButtonBorder ? "border-secondary border" : "border-none"}
+        group relative overflow-hidden
+        px-7 py-2.5
+        font-unbounded
+        rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl
+        cursor-pointer text-[14px] leading-5 font-normal`}
       >
         <span className="block transition-transform duration-400 group-hover:-translate-y-10">
           {text}
@@ -29,8 +36,6 @@ const HeroButton = ({ text, backGround = true, textColor, ButtonBorder = true, o
           {text}
         </span>
       </button>
-
-     
     </>
   );
 };
