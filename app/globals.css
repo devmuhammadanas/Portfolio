@@ -13,6 +13,11 @@
 
   --color-primary: #F1F5F9;
   --color-secondary: #f2aa02;
+  --color-danger: #C6C9CC;
+  --color-info: #777;
+  --color-primaryBorder: #343434;
+  --color-primaryBackground: #232323;
+  --color-sencondaryBackground: #252525;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,5 +31,17 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: sans-serif;
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 58% 42% 70% 30% / 40% 50% 50% 60%;
+  }
+  50% {
+    border-radius: 30% 70% 40% 60% / 60% 30% 70% 40%;
+  }
+  100% {
+    border-radius: 58% 42% 70% 30% / 40% 50% 50% 60%;
+  }
 }
 

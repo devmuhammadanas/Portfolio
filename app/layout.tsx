@@ -27,7 +27,7 @@ export default function RootLayout({
     <html
       lang="en"
       className='h-full antialiased'>
-      <body className={`min-h-full flex flex-col ${unbounded.variable} ${geist.variable}`}>{children}</body>
+      <body className={`${unbounded.variable} ${geist.variable}`}>{children}</body>
     </html>
   );
 }
