@@ -27,8 +27,8 @@ const ChatModule = ({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-primaryBackground flex justify-center items-center z-50">
-      <div className="w-[80%] h-screen bg-[#1e1e1e] rounded-3xl p-6">
+    <div className="fixed w-[70%] px-10 py-6 mx-auto min-h-screen flex flex-col inset-0 bg-[#1e1e1e] z-50">
+      <div className=" grow shrink-0 basis-auto rounded-3xl p-6">
 
         <button
           onClick={() => setIsOpen(false)}
@@ -37,14 +37,15 @@ const ChatModule = ({
           Close Tab
         </button>
 
-        <div className="mt-6">
+        <div className="mt-6 flex gap-2">
+            <div className='w-10 h-10 bg-secondary rounded-full'></div>
           <p className="text-white">
             {portfolioData[selectedTopic]}
           </p>
         </div>
 
-        <SearchBar />
       </div>
+        <SearchBar />
     </div>
   )
 }

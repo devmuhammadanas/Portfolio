@@ -1,27 +1,10 @@
-"use client";
 import HeroButton from "@/src/components/common/HeroButton";
-import React, { useState } from "react";
 import { FaQuoteLeft } from "react-icons/fa6";
 import SearchBar from "@/src/components/ui/SearchBar";
 import Footer from "@/src/components/ui/Footer";
 import { heroContent, intro } from "@/src/locales/constants";
 
-const page = () => {
-  const portfolioData = {
-  about: "I am a Full Stack Developer with 1.5 years experience...",
-  skills: "React, Next.js, Node.js, Express, MongoDB...",
-  projects: "E-commerce App, Portfolio Website...",
-  clients: "Worked with 10+ clients...",
-  experience: "Full Stack Developer at Exeonic...",
-  contact: "Email: anas@gmail.com",
-}
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState("");
-
-  const handleOpen = (topic: string) => {
-    setSelectedTopic(topic);
-    setIsOpen(true);
-  };
+const Home = () => {
   return (
     <div className="w-full md:w-[90%] lg:w-[70%] mx-auto min-h-screen flex flex-col">
       <main className="grow shrink-0 basis-auto">
@@ -56,40 +39,15 @@ const page = () => {
               backGround={true}
               textColor="text-primary mr-8"
               ButtonBorder={false}
-              sectionValue="about"
-              openDetails={handleOpen}
+              sectionType="about"
             />
             <HeroButton
               text={intro.workBotton}
               textColor="text-secondary"
               ButtonBorder={true}
               backGround={false}
-              sectionValue="skillsF"
-              openDetails={handleOpen}
+              sectionType="skills"
             />
-            {
-  isOpen && (
-    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-      <div className="w-[800px] h-[600px] bg-[#1e1e1e] rounded-3xl p-6">
-
-        <button
-          onClick={() => setIsOpen(false)}
-          className="text-white"
-        >
-          Close
-        </button>
-
-        <div className="mt-6">
-          <p className="text-white">
-            {portfolioData[selectedTopic]}
-          </p>
-        </div>
-
-      <SearchBar />
-      </div>
-    </div>
-  )
-}
           </div>
         </div>
       </main>
@@ -99,4 +57,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Home;

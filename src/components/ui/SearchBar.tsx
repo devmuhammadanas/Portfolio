@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { IoIosDocument } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
