@@ -1,10 +1,18 @@
+'use client'
 import HeroButton from "@/src/components/common/HeroButton";
 import { FaQuoteLeft } from "react-icons/fa6";
 import SearchBar from "@/src/components/ui/SearchBar";
 import Footer from "@/src/components/ui/Footer";
 import { heroContent, intro } from "@/src/locales/constants";
+import { useState } from "react";
 
 const Home = () => {
+  const [inputValue, setInputValue] = useState("");
+  const handleSend = () => {
+    console.log(inputValue);
+
+    // open modal here
+  };
   return (
     <div className="w-full md:w-[90%] lg:w-[70%] mx-auto min-h-screen flex flex-col">
       <main className="grow shrink-0 basis-auto">
@@ -51,7 +59,11 @@ const Home = () => {
           </div>
         </div>
       </main>
-      <SearchBar />
+      <SearchBar
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        handleSend={handleSend}
+      />
       <Footer />
     </div>
   );

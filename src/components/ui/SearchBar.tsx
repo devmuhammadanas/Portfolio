@@ -13,6 +13,9 @@ type SectionType = "about" | "skills" | "projects" | "experience" | "contact";
 
 type SearchBarProps = {
   onSelectTopic?: (topic: SectionType) => void;
+  inputValue?: string;
+  setInputValue?: (value: string) => void;
+  handleSend?: () => void;
 };
 
 const SearchBar = ({
@@ -58,21 +61,15 @@ const SearchBar = ({
       <div className="flex items-center flex-1 px-2 py-2">
         <input
           type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          value={inputValue || ''}
+          onChange={(e) => setInputValue?.(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend?.()}
           placeholder={searchBottonText.placeholder}
           className="w-full bg-transparent px-4 py-2 text-primary font-geist text-sm leading-5 font-normal outline-none border-none"
         />
-
-        {/* <input
-          type="text"
-          placeholder={searchBottonText.placeholder}
-          className="w-full bg-transparent px-4 py-2 text-primary font-geist text-sm leading-5 font-normal outline-none border-none"
-        /> */}
         <button
           type="button"
-          onClick={handleSend}
+          onClick={() => handleSend?.()}
           className="px-2 py-2 bg-secondary rounded-full flex items-center justify-center"
         >
           <FaArrowUp className="text-primary text-lg" />

@@ -239,9 +239,9 @@ const ChatModule = ({
         onClick={(e) => e.stopPropagation()}
         className="fixed inset-0 z-[9999] flex justify-center"
       >
-        <div className="w-[80%] min-h-screen flex flex-col overflow-hidden bg-[#191919] shadow-2xl overflow-y-auto scroll-m-9 pb-100">
+        <div className="w-[80%] min-h-screen flex flex-col overflow-hidden bg-[#191919] shadow-2xl overflow-y-auto scrollbar-thin scrollbar-thumb-[#333] scrollbar-track-transparent">
           {/* ── Top bar ── */}
-          <div className="flex items-center justify-between px-6 pt-5 pb-3 ">
+          <div className="flex sticky-top items-center justify-between px-6 pt-5 pb-3 border-b border-[#333]">
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 overflow-hidden flex items-center justify-center">
                 {avatarUrl ? (
@@ -264,8 +264,7 @@ const ChatModule = ({
           {/* ── Scrollable chat area ── */}
           <div
             ref={scrollRef}
-            className="flex-1  px-6 py-5 flex flex-col gap-5 min-h-0"
-            style={{ minHeight: '260px', maxHeight: '52vh' }}
+            className="flex-1 px-6 py-5 flex flex-col gap-5 min-h-[350px] max-h-[52vh] overflow-y-auto scrollbar-none scrollbar-thumb-[#333] scrollbar-track-transparent"
           >
             
             {messages.map((msg) => (
@@ -276,55 +275,6 @@ const ChatModule = ({
 
           {/* ── Search bar + buttons ── */}
           <div className="absolute bottom-0 w-[80%] px-6">
-            {/* Input row */}
-            {/* <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#141414] border border-white/[0.07] mb-4">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Try about, skills, or projects…"
-                className="flex-1 bg-transparent text-white/60 text-sm placeholder:text-white/20 outline-none border-none py-1.5"
-              />
-              <button
-                type="button"
-                onClick={handleSend}
-                className="w-8 h-8 rounded-full bg-[#f5a623] flex items-center justify-center shrink-0 hover:bg-[#f5a623]/80 transition-colors"
-              >
-                <FaArrowUp className="text-black text-sm" />
-              </button>
-            </div> */}
-
-            {/* Topic buttons */}
-            {/* <div className="flex flex-wrap gap-2.5">
-              {navItems.map(({ value, label, icon: Icon }) => {
-                const isActive = selectedTopic === value
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => handleTopicClick(value)}
-                    disabled={isTyping}
-                    className={`
-                      flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-medium
-                      border transition-all duration-200 cursor-pointer
-                      disabled:opacity-40 disabled:cursor-not-allowed
-                      hover:-translate-y-0.5
-                      ${
-                        isActive
-                          ? 'bg-[#f5a623] border-[#f5a623] text-black shadow-md shadow-[#f5a623]/20'
-                          : 'bg-[#141414] border-white/[0.1] text-white/50 hover:text-white/80 hover:border-white/20'
-                      }
-                    `}
-                  >
-                    <Icon
-                      className={`text-sm shrink-0 ${isActive ? 'text-black' : 'text-[#f5a623]'}`}
-                    />
-                    {label}
-                  </button>
-                )
-              })}
-            </div> */}
           <SearchBar inputValue={inputValue} setInputValue={setInputValue} handleSend={handleSend} onSelectTopic={handleTopicClick} />
             {/* Hint */}
             <Footer />
