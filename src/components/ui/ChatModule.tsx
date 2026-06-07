@@ -66,11 +66,9 @@ import { IoIosDocument } from 'react-icons/io'
 import { IoMdSettings, IoMdMail } from 'react-icons/io'
 import { SiPolymerproject } from 'react-icons/si'
 import { MdGroups2 } from 'react-icons/md'
-import { FaArrowUp } from 'react-icons/fa'
 import SearchBar from './SearchBar'
 import Footer from './Footer'
 import { TypingIndicator } from '../common/TypingIndicator'
-import HeroButton from '../common/HeroButton'
 import { ChatText } from '../common/ChatText'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -91,6 +89,8 @@ type ChatModuleProps = {
   setSelectedTopic: React.Dispatch<React.SetStateAction<keyof PortfolioData>>
   portfolioData: PortfolioData
   avatarUrl?: string          // optional real avatar image
+  initialInput?: string       // optional input to process on open
+  setInitialInput?: (value: string) => void // callback to clear initial input
 }
 
 type ChatMessage = {
@@ -123,6 +123,8 @@ const ChatModule = ({
   setSelectedTopic,
   portfolioData,
   avatarUrl,
+  initialInput,
+  setInitialInput,
 }: ChatModuleProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isTyping, setIsTyping] = useState(false)
@@ -132,15 +134,62 @@ const ChatModule = ({
   // Seed the initial message when modal opens
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      const initial = navItems.find((n) => n.value === selectedTopic)
-      setMessages([
-        {
-          id: crypto.randomUUID(),
-          topic: selectedTopic,
-          label: initial?.label ?? selectedTopic,
-          content: portfolioData[selectedTopic],
-        },
-      ])
+      // If initialInput is provided, process it instead of showing the topic
+      if (initialInput && initialInput.trim()) {
+        const trimmed = initialInput.trim().toLowerCase()
+        const matched = navItems.find(
+          (n) =>
+            trimmed.includes(n.value) ||
+            trimmed.includes(n.label.toLowerCase())
+        )
+
+        if (matched) {
+          setSelectedTopic(matched.value)
+          setIsTyping(true)
+          setTimeout(() => {
+            const nav = navItems.find((n) => n.value === matched.value)
+            setMessages([
+              {
+                id: crypto.randomUUID(),
+                topic: matched.value,
+                label: nav?.label ?? matched.value,
+                content: portfolioData[matched.value],
+              },
+            ])
+            setIsTyping(false)
+          }, 900)
+        } else {
+          // Show error message for non-matching input
+          setIsTyping(true)
+          setTimeout(() => {
+            setMessages([
+              {
+                id: crypto.randomUUID(),
+                topic: selectedTopic,
+                label: 'Info',
+                content: portfolioData.oneAwnser,
+              },
+            ])
+            setIsTyping(false)
+          }, 700)
+        }
+        
+        // Clear initial input after processing
+        if (setInitialInput) {
+          setInitialInput('')
+        }
+      } else {
+        // Default behavior - show the selected topic
+        const initial = navItems.find((n) => n.value === selectedTopic)
+        setMessages([
+          {
+            id: crypto.randomUUID(),
+            topic: selectedTopic,
+            label: initial?.label ?? selectedTopic,
+            content: portfolioData[selectedTopic],
+          },
+        ])
+      }
     }
   }, [isOpen])
 
@@ -211,8 +260,7 @@ const ChatModule = ({
             id: crypto.randomUUID(),
             topic: selectedTopic,
             label: 'Info',
-            content:
-              "Sorry, I didn't catch that. Try asking about About Me, Skills, Projects, Clients, or Contact.",
+            content: portfolioData.oneAwnser,
           },
         ])
         setIsTyping(false)
@@ -247,17 +295,17 @@ const ChatModule = ({
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-[#f5a623] text-[9px] font-bold">DA</span>
+                  <span className="text-[#f5a623] text-[9px] font-bold">{portfolioData.shortName}</span>
                 )}
               </div>
-              <span className="text-white/40 text-xs tracking-wide">Muhammad Anas</span>
+              <span className="text-white/40 text-xs tracking-wide">{portfolioData.name}</span>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
               className="text-white/25 hover:text-white/70 text-xs transition-colors"
             >
-              ✕ Close
+              {portfolioData.hideModule}
             </button>
           </div>
 

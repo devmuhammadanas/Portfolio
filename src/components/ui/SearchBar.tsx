@@ -9,7 +9,7 @@ import { FaArrowUp } from "react-icons/fa";
 import DetailsButton from "../common/detailsButton";
 import { searchBottonText } from "@/src/locales/constants";
 
-type SectionType = "about" | "skills" | "projects" | "experience" | "contact";
+type SectionType = "about" | "skills" | "projects" | "experience" | "contact" | "clients";
 
 type SearchBarProps = {
   onSelectTopic?: (topic: SectionType) => void;
@@ -45,7 +45,7 @@ const SearchBar = ({
       value: "projects" as const,
     },
     {
-      text: searchBottonText.experience,
+      text: "Experience",
       icon: MdGroups2,
       value: "experience" as const,
     },
@@ -83,7 +83,7 @@ const SearchBar = ({
               key={item.value}
               type="button"
               onClick={() => onSelectTopic(item.value)}
-              className="cursor-pointer text-[13px] leading-5 gap-2 flex items-center bg-[#191919] border border-primaryBorder text-info font-normal px-4.5 py-2.5 font-unbounded rounded-full transition-transform duration-300 hover:-translate-y-1"
+              className="cursor-pointer text-[13px] leading-5 gap-2 flex items-center bg-[#191919] border border-primaryBorder text-info font-normal px-4.5 py-2.5 font-unbounded rounded-full transition-transform duration-300 hover:-translate-y-1 hover:border-secondary"
             >
               <item.icon className="text-secondary text-lg" />
               {item.text}

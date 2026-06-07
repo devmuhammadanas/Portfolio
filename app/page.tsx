@@ -3,15 +3,32 @@ import HeroButton from "@/src/components/common/HeroButton";
 import { FaQuoteLeft } from "react-icons/fa6";
 import SearchBar from "@/src/components/ui/SearchBar";
 import Footer from "@/src/components/ui/Footer";
-import { heroContent, intro } from "@/src/locales/constants";
+import ChatModule from "@/src/components/ui/ChatModule";
+import { heroContent, intro, portfolioData } from "@/src/locales/constants";
 import { useState } from "react";
+
+type PortfolioDataType = typeof portfolioData;
+type SectionType = keyof PortfolioDataType;
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
-  const handleSend = () => {
-    console.log(inputValue);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState<SectionType>("about");
+  const [initialInput, setInitialInput] = useState("");
 
-    // open modal here
+  const handleSend = () => {
+    if (!inputValue.trim()) return;
+
+    // Always pass the input to ChatModule to process
+    setInitialInput(inputValue);
+    setIsModalOpen(true);
+    setInputValue("");
+  };
+
+  const handleSelectTopic = (topic: SectionType) => {
+    setSelectedTopic(topic);
+    setInitialInput(""); // Clear initial input for direct button clicks
+    setIsModalOpen(true);
   };
   return (
     <div className="w-full md:w-[90%] lg:w-[70%] mx-auto min-h-screen flex flex-col">
@@ -63,8 +80,18 @@ const Home = () => {
         inputValue={inputValue}
         setInputValue={setInputValue}
         handleSend={handleSend}
+        onSelectTopic={handleSelectTopic}
       />
       <Footer />
+      <ChatModule
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        selectedTopic={selectedTopic}
+        setSelectedTopic={setSelectedTopic}
+        portfolioData={portfolioData}
+        initialInput={initialInput}
+        setInitialInput={setInitialInput}
+      />
     </div>
   );
 };

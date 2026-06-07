@@ -33,4 +33,9 @@ export const portfolioData = {
     clients: "Worked with 10+ clients...",
     experience: "Full Stack Developer at Exeonic...",
     contact: "anas@gmail.com",
+    oneAwnser: "Sorry, I didn't catch that. Try asking about About Me, Skills, Projects, Clients, or Contact.",
+    name : "Muhammad Anas",
+    role : "Web & Mobile Developer",
+    shortName : 'MA' ,
+    hideModule: 'X Close',
   };

@@ -1,3 +1,5 @@
+import { portfolioData } from "@/src/locales/constants"
+
 type PortfolioData = {
   about: string
   skills: string
@@ -27,7 +29,7 @@ export const ChatText = ({
       {avatarUrl ? (
         <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
       ) : (
-        <span className="text-[#f5a623] text-[10px] font-bold">DA</span>
+        <span className="text-[#f5a623] text-[10px] font-bold">{portfolioData.shortName}</span>
       )}
     </div>
 
