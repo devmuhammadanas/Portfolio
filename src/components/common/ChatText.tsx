@@ -1,4 +1,5 @@
 import { portfolioData } from "@/src/locales/constants"
+import TypeWriter from "../ui/TypeWriter"
 
 type PortfolioData = {
   about: string
@@ -22,7 +23,23 @@ export const ChatText = ({
 }: {
   message: ChatMessage
   avatarUrl?: string
-}) => (
+}) => {
+
+  const fullText = `
+${message.content.title || ''}
+
+${message.content.intro || ''}
+
+${message.content.detailsTitle || ''}
+
+${message.content.basicDetails?.map(item => `• ${item}`).join('\n') || ''}
+
+${message.content.basicInfoTitle || ''}
+
+${message.content.basicInfo || ''}
+`;
+  
+  return(
   <div className="flex items-start gap-3 animate-slide-up">
     {/* Avatar */}
     <div className="w-8 h-8 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 shrink-0 flex items-center justify-center overflow-hidden mt-0.5">
@@ -44,7 +61,8 @@ export const ChatText = ({
       </div>
       <div className="bg-[#1e1e1e] border border-white/[0.07] rounded-2xl rounded-tl-none px-5 py-4 text-white/75 text-sm leading-[1.8] font-light">
         {message.content}
-      </div>
+      {/* <TypeWriter text={fullText} /> */}
+      </div> 
     </div>
   </div>
-)
+)}
