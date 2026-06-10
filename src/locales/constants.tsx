@@ -91,7 +91,11 @@ export const portfolioData = {
     },
     projects: "E-commerce App...",
     clients: "Worked with 10+ clients...",
-    experience: "Full Stack Developer at Exeonic...",
+    experience: `Experience
+
+I have 1.5+ years of experience as a Full-Stack Web & Mobile Developer, building responsive web applications and cross-platform mobile apps. I have worked with development teams and clients to deliver scalable solutions using React, Next.js, React Native, Node.js, and MongoDB.
+
+My experience includes developing user-friendly interfaces, integrating APIs, implementing authentication systems, optimizing application performance, and building complete products from concept to deployment. I've contributed to both company projects and freelance work, focusing on creating reliable, high-quality digital experiences.`,
     contact: "anas@gmail.com",
     oneAwnser: "Sorry, I didn't catch that. Try asking about About Me, Skills, Projects, Clients, or Contact.",
     name : "Muhammad Anas",
