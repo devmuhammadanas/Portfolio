@@ -74,19 +74,39 @@ import { ChatText } from '../common/ChatText'
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type PortfolioData = {
-  about: string
-  skills: string
+  about: {
+    title?: string
+    intro?: string
+    detailsTitle?: string
+    basicDetails?: string[]
+    basicInfoTitle?: string
+    basicInfo?: string
+  }
+  skills: {
+    sections: {
+      title: string
+      items: string[]
+    }[]
+    summary: string
+  }
   projects: string
   clients: string
   experience: string
   contact: string
+  oneAwnser: string
+  name: string
+  role: string
+  shortName: string
+  hideModule: string
 }
+
+export type ChatTopic = 'about' | 'skills' | 'projects' | 'clients' | 'experience' | 'contact'
 
 type ChatModuleProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  selectedTopic: keyof PortfolioData
-  setSelectedTopic: React.Dispatch<React.SetStateAction<keyof PortfolioData>>
+  selectedTopic: ChatTopic
+  setSelectedTopic: React.Dispatch<React.SetStateAction<ChatTopic>>
   portfolioData: PortfolioData
   avatarUrl?: string          // optional real avatar image
   initialInput?: string       // optional input to process on open
@@ -95,15 +115,15 @@ type ChatModuleProps = {
 
 type ChatMessage = {
   id: string
-  topic: keyof PortfolioData
+  topic: ChatTopic
   label: string
-  content: string
+  content: PortfolioData[keyof PortfolioData]
 }
 
 // ─── Nav Items ────────────────────────────────────────────────────────────────
 
 const navItems: {
-  value: keyof PortfolioData
+  value: ChatTopic
   label: string
   icon: React.ElementType
 }[] = [
@@ -133,7 +153,9 @@ const ChatModule = ({
 
   // Seed the initial message when modal opens
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (!isOpen || messages.length !== 0) return
+
+    const seedTimer = setTimeout(() => {
       // If initialInput is provided, process it instead of showing the topic
       if (initialInput && initialInput.trim()) {
         const trimmed = initialInput.trim().toLowerCase()
@@ -157,6 +179,7 @@ const ChatModule = ({
               },
             ])
             setIsTyping(false)
+            setInitialInput?.('')
           }, 900)
         } else {
           // Show error message for non-matching input
@@ -171,12 +194,8 @@ const ChatModule = ({
               },
             ])
             setIsTyping(false)
+            setInitialInput?.('')
           }, 700)
-        }
-        
-        // Clear initial input after processing
-        if (setInitialInput) {
-          setInitialInput('')
         }
       } else {
         // Default behavior - show the selected topic
@@ -190,17 +209,25 @@ const ChatModule = ({
           },
         ])
       }
-    }
-  }, [isOpen])
+    }, 0)
 
-  // Reset when closed
-  useEffect(() => {
-    if (!isOpen) {
-      setMessages([])
-      setIsTyping(false)
-      setInputValue('')
-    }
-  }, [isOpen])
+    return () => clearTimeout(seedTimer)
+  }, [
+    initialInput,
+    isOpen,
+    messages.length,
+    portfolioData,
+    selectedTopic,
+    setInitialInput,
+    setSelectedTopic,
+  ])
+
+  const handleClose = () => {
+    setIsOpen(false)
+    setMessages([])
+    setIsTyping(false)
+    setInputValue('')
+  }
 
   // Auto-scroll to bottom on new message
   useEffect(() => {
@@ -212,7 +239,7 @@ const ChatModule = ({
     }
   }, [messages, isTyping])
 
-  const handleTopicClick = (topic: keyof PortfolioData) => {
+  const handleTopicClick = (topic: ChatTopic) => {
     // Don't re-add the same topic that was just added
     const last = messages[messages.length - 1]
     if (last?.topic === topic && isTyping === false) {
@@ -277,7 +304,7 @@ const ChatModule = ({
       {/* Backdrop */}
       <div
         className="fixed  inset-0 z-[9998] bg-black/50 backdrop-blur-sm"
-        onClick={() => setIsOpen(false)}
+        onClick={handleClose}
       />
 
       {/* Modal — matches the reference image: centered card, rounded, dark */}
@@ -302,7 +329,7 @@ const ChatModule = ({
             </div>
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="text-white/25 hover:text-white/70 text-xs transition-colors"
             >
               {portfolioData.hideModule}
@@ -316,7 +343,18 @@ const ChatModule = ({
           >
             
             {messages.map((msg) => (
-              <ChatText key={msg.id} message={msg} avatarUrl={avatarUrl} />
+              <ChatText
+                key={msg.id}
+                message={msg}
+                avatarUrl={avatarUrl}
+                onSelectTopic={handleTopicClick}
+                onTypingProgress={() => {
+                  scrollRef.current?.scrollTo({
+                    top: scrollRef.current.scrollHeight,
+                    behavior: 'smooth',
+                  })
+                }}
+              />
             ))}
             {isTyping && <TypingIndicator />}
           </div>

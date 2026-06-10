@@ -3,17 +3,14 @@ import HeroButton from "@/src/components/common/HeroButton";
 import { FaQuoteLeft } from "react-icons/fa6";
 import SearchBar from "@/src/components/ui/SearchBar";
 import Footer from "@/src/components/ui/Footer";
-import ChatModule from "@/src/components/ui/ChatModule";
+import ChatModule, { ChatTopic } from "@/src/components/ui/ChatModule";
 import { heroContent, intro, portfolioData } from "@/src/locales/constants";
 import { useState } from "react";
-
-type PortfolioDataType = typeof portfolioData;
-type SectionType = keyof PortfolioDataType;
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState<SectionType>("about");
+  const [selectedTopic, setSelectedTopic] = useState<ChatTopic>("about");
   const [initialInput, setInitialInput] = useState("");
 
   const handleSend = () => {
@@ -25,7 +22,7 @@ const Home = () => {
     setInputValue("");
   };
 
-  const handleSelectTopic = (topic: SectionType) => {
+  const handleSelectTopic = (topic: ChatTopic) => {
     setSelectedTopic(topic);
     setInitialInput(""); // Clear initial input for direct button clicks
     setIsModalOpen(true);
@@ -65,6 +62,7 @@ const Home = () => {
               textColor="text-primary mr-8"
               ButtonBorder={false}
               sectionType="about"
+              onSelectTopic={handleSelectTopic}
             />
             <HeroButton
               text={intro.workBotton}
@@ -72,6 +70,7 @@ const Home = () => {
               ButtonBorder={true}
               backGround={false}
               sectionType="skills"
+              onSelectTopic={handleSelectTopic}
             />
           </div>
         </div>
