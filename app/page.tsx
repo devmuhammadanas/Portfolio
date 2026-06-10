@@ -6,6 +6,11 @@ import Footer from "@/src/components/ui/Footer";
 import ChatModule, { ChatTopic } from "@/src/components/ui/ChatModule";
 import { heroContent, intro, portfolioData } from "@/src/locales/constants";
 import { useState } from "react";
+import { FaFacebookF } from "react-icons/fa";
+import { FiGithub } from "react-icons/fi";
+import { FaLinkedinIn } from "react-icons/fa6";
+
+
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
@@ -53,7 +58,29 @@ const Home = () => {
               {intro.name} - {intro.role}
             </p>
           </div>
+
           <div className="absolute left-1/2 -translate-x-1/2 w-[450px] h-[350px] max-w-60.5 max-h-40.5 inset-0 bg-secondary animate-[morph_8s_ease-in-out_infinite]" />
+
+          <div className=" relative w-50 h-40 flex-col flex-wrap z-20">
+            <a href="https://www.facebook.com/dev.muhamadanas/"  
+            className="absolute -left-2 -top-1 flex justify-center items-center border bg-cyan-300 rounded-full px-2 py-2 shadow-cyan-300 shadow-md animate-[morph_8s_ease-in-out_infinite]">
+            <FaFacebookF className="text-primary text-2xl" />
+            </a>
+            
+            <a href="https://github.com/devmuhammadanas"  
+            className="absolute -right-5 top-1/2 border bg-emerald-800 rounded-full px-2 py-2 flex justify-center items-center shadow-emerald-800 shadow-md animate-[morph_8s_ease-in-out_infinite]">
+            <FiGithub className="text-primary text-3xl"/>
+            </a>
+            <a href="https://www.linkedin.com/in/dev-muhammadanas/"  
+            className="absolute -left-2 bottom-0 flex justify-center items-center border bg-secondary rounded-full px-2 py-2 shadow-secondary shadow-md animate-[morph_8s_ease-in-out_infinite]">
+            <FaLinkedinIn className="text-primary text-2xl"/>
+            </a>
+
+          </div>
+          <img src="/portfolio_Main.png" alt="" className="z-10 absolute -bottom-15 z-10 w-50 h-70 left-1/2 -translate-x-1/2" />
+          {/* <div className="absolute z-0 w-50 h-70 -bottom-15 left-1/2 -translate-x-1/2">
+          <img src="/portfolio_Main.png" alt="" className="z-10" />
+          </div> */}
 
           <div className="flex flex-col gap-4 w-64.5 justify-end items-end border-red-500">
             <HeroButton
@@ -90,6 +117,7 @@ const Home = () => {
         portfolioData={portfolioData}
         initialInput={initialInput}
         setInitialInput={setInitialInput}
+        avatarUrl = "/avatar.png"
       />
     </div>
   );

@@ -70,6 +70,7 @@ import SearchBar from './SearchBar'
 import Footer from './Footer'
 import { TypingIndicator } from '../common/TypingIndicator'
 import { ChatText } from '../common/ChatText'
+import Image from 'next/image'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -320,7 +321,7 @@ const ChatModule = ({
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 overflow-hidden flex items-center justify-center">
                 {avatarUrl ? (
-                  <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                  <Image src={avatarUrl} width={100} height={100} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-[#f5a623] text-[9px] font-bold">{portfolioData.shortName}</span>
                 )}

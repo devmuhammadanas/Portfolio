@@ -57,7 +57,7 @@ const SearchBar = ({
   ];
 
   return (
-    <div className="flex flex-col gap-1.5 rounded-3xl border border-primaryBorder px-2.5 pb-5 pt-[15px] bg-sencondaryBackground">
+    <div className="flex z-20 flex-col gap-1.5 rounded-3xl border border-primaryBorder px-2.5 pb-5 pt-[15px] bg-sencondaryBackground">
       <div className="flex items-center flex-1 px-2 py-2">
         <input
           type="text"
