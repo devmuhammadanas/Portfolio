@@ -1,7 +1,9 @@
 'use client'
 
 import { portfolioData } from "@/src/locales/constants"
+import Image from "next/image"
 import {
+  FaAngleRight,
   FaBootstrap,
   FaBriefcase,
   FaCode,
@@ -63,6 +65,16 @@ type SkillContent = {
   summary: string
 }
 
+type ExperienceContent = {
+  title: string
+  sections: {
+    role: string
+    company: string
+    period: string
+    details: string[]
+  }[]
+}
+
 type ContactContent = {
   name: string
   address: string
@@ -79,7 +91,7 @@ type PortfolioData = {
   skills: SkillContent
   projects: string
   clients: string
-  experience: string
+  experience: ExperienceContent
   contact: ContactContent
   oneAwnser: string
 }
@@ -134,6 +146,59 @@ const skillSectionIcons: Record<string, React.ReactNode> = {
   "What I Focus On": <FaCode />,
 }
 
+const isSkillContent = (content: unknown): content is SkillContent => {
+  if (typeof content !== "object" || content === null || !("sections" in content)) {
+    return false
+  }
+
+  const candidate = content as { sections?: unknown }
+  if (!Array.isArray(candidate.sections) || candidate.sections.length === 0) {
+    return false
+  }
+
+  const firstSection = candidate.sections[0]
+  return (
+    typeof firstSection === "object" &&
+    firstSection !== null &&
+    "items" in firstSection
+  )
+}
+
+const isExperienceContent = (content: unknown): content is ExperienceContent => {
+  if (typeof content !== "object" || content === null || !("sections" in content)) {
+    return false
+  }
+
+  const candidate = content as { sections?: unknown }
+  if (!Array.isArray(candidate.sections) || candidate.sections.length === 0) {
+    return false
+  }
+
+  const firstSection = candidate.sections[0]
+  return (
+    typeof firstSection === "object" &&
+    firstSection !== null &&
+    "role" in firstSection &&
+    "company" in firstSection
+  )
+}
+
+const isContactContent = (content: unknown): content is ContactContent =>
+  Boolean(
+    typeof content === "object" &&
+      content !== null &&
+      "socials" in content
+  )
+
+const isDetailedContent = (content: unknown): content is DetailedContent =>
+  Boolean(
+    typeof content === "object" &&
+      content !== null &&
+      ("intro" in content ||
+        "basicDetails" in content ||
+        "basicInfo" in content)
+  )
+
 const getMessageSegments = (
   content: ChatMessage["content"]
 ): TypeWriterSegment[] => {
@@ -141,7 +206,7 @@ const getMessageSegments = (
     return [{ text: content }]
   }
 
-  if ("sections" in content) {
+  if (isSkillContent(content)) {
     return [
       ...content.sections.flatMap((section, sectionIndex) => [
         ...(sectionIndex === 0 ? [] : [{ text: "\n" }]),
@@ -178,7 +243,56 @@ const getMessageSegments = (
     ]
   }
 
-  if ("socials" in content) {
+  if (isExperienceContent(content)) {
+    return [
+      {
+  text: `${content.title}`,
+  className: "text-[13px] font-semibold uppercase tracking-wider text-white/90 leading-none",
+  wrapperClassName:
+    "mb-4 flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-3",
+  prefix: (
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#f5a623]/15 text-[13px] text-[#f5a623]">
+      <FaBriefcase />
+    </span>
+  ),
+},
+      ...content.sections.flatMap((section) => [
+        {
+          text: `${section.role}\n`,
+          className: "text-[13px] font-semibold text-white/90",
+          wrapperClassName: "mb-2 flex items-center gap-2",
+          prefix: (
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+              <FaBriefcase />
+            </span>
+          ),
+        },
+        {
+          text: `${section.company} · ${section.period}\n`,
+          className: "text-[12px] text-white/70",
+          wrapperClassName: "mb-3 flex items-center gap-2 ",
+          prefix: (
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+              <FaMapMarkerAlt />
+            </span>
+          ),
+        },
+        ...section.details.map((detail) => ({
+          text: `${detail}\n`,
+          prefix: (
+            <span className="mt-1 ml-4 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+              <FaAngleRight />
+            </span>
+          ),
+          className: "text-[12px] leading-6 text-white/75",
+          wrapperClassName: "flex items-center gap-2.5",
+        })),
+        { text: "\n" },
+      ]),
+    ]
+  }
+
+  if (isContactContent(content)) {
     const contactIcons: Record<string, React.ReactNode> = {
       address: <FaMapMarkerAlt />, 
       phone: <FaPhoneAlt />,
@@ -240,43 +354,47 @@ const getMessageSegments = (
     return baseSegments
   }
 
-  const detailIcons = [
-    <FaBriefcase key="experience" />,
-    <FaLaptopCode key="projects" />,
-    <FaCode key="expertise" />,
-    <FaRegHandshake key="available" />,
-    <FaMapMarkerAlt key="location" />,
-  ]
+  if (isDetailedContent(content)) {
+    const detailIcons = [
+      <FaBriefcase key="experience" />,
+      <FaLaptopCode key="projects" />,
+      <FaCode key="expertise" />,
+      <FaRegHandshake key="available" />,
+      <FaMapMarkerAlt key="location" />,
+    ]
 
-  return [
-    {
-      text: content.title ? `${content.title}\n` : "",
-      className: "font-semibold text-white/90",
-    },
-    {
-      text: content.intro ? `${content.intro}\n` : "",
-    },
-    {
-      text: content.detailsTitle ? `\n${content.detailsTitle}\n` : "",
-      className: "font-semibold text-white/90",
-    },
-    ...(content.basicDetails?.map((item, index) => ({
-      text: `${item}\n`,
-      prefix: (
-        <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
-          {detailIcons[index]}
-        </span>
-      ),
-      wrapperClassName: "flex items-start gap-2.5",
-    })) ?? []),
-    {
-      text: content.basicInfoTitle ? `\n${content.basicInfoTitle}\n` : "",
-      className: "font-semibold text-white/90",
-    },
-    {
-      text: content.basicInfo ? `\n${content.basicInfo}` : "",
-    },
-  ].filter((segment) => segment.text)
+    return [
+      {
+        text: content.title ? `${content.title}\n` : "",
+        className: "font-semibold text-white/90",
+      },
+      {
+        text: content.intro ? `${content.intro}\n` : "",
+      },
+      {
+        text: content.detailsTitle ? `\n${content.detailsTitle}\n` : "",
+        className: "font-semibold text-white/90",
+      },
+      ...(content.basicDetails?.map((item, index) => ({
+        text: `${item}\n`,
+        prefix: (
+          <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+            {detailIcons[index]}
+          </span>
+        ),
+        wrapperClassName: "flex items-start gap-2.5",
+      })) ?? []),
+      {
+        text: content.basicInfoTitle ? `\n${content.basicInfoTitle}\n` : "",
+        className: "font-semibold text-white/90",
+      },
+      {
+        text: content.basicInfo ? `\n${content.basicInfo}` : "",
+      },
+    ].filter((segment) => segment.text)
+  }
+
+  return [{ text: "" }]
 }
 
 export const ChatText = ({
@@ -295,11 +413,19 @@ export const ChatText = ({
   return(
   <div className="flex items-start gap-3 animate-slide-up">
     {/* Avatar */}
-    <div className="w-8 h-8 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 shrink-0 flex items-center justify-center overflow-hidden mt-0.5">
+    <div className="relative w-8 h-8 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 shrink-0 overflow-hidden mt-0.5">
       {avatarUrl ? (
-        <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+        <Image
+          src={avatarUrl}
+          alt="avatar"
+          fill
+          className="object-cover"
+          unoptimized
+        />
       ) : (
-        <span className="text-[#f5a623] text-[10px] font-bold">{portfolioData.shortName}</span>
+        <span className="absolute inset-0 flex items-center justify-center text-[#f5a623] text-[10px] font-bold">
+          {portfolioData.shortName}
+        </span>
       )}
     </div>
 

@@ -99,36 +99,42 @@ export const portfolioData = {
   },
   projects: "E-commerce App...",
   clients: "Worked with 10+ clients...",
-  experience: `### Work Experience
-
----
-
-#### Full Stack Web & Mobile Developer
-
-**Exeonic** · Aug 2025 – Present
-
-Developing and maintaining scalable web and mobile applications across the full stack. Build cross-platform mobile apps optimized for performance and device compatibility. Integrate RESTful APIs, authentication systems, and real-time features. Collaborate with designers and developers to scope, plan, and deliver projects on schedule. Continuously debug and performance-tune production applications.
-
----
-
-#### Full Stack Developer — Internship
-
-**Exeonic** · May 2025 – Jul 2025
-
-Contributed to live projects under senior developers, focusing on feature development, bug fixing, and performance improvements. Participated in QA testing cycles and collaborated with the team to meet project deadlines.
-
----
-
-#### Freelance Full Stack Developer
-
-**Independent** · Apr 2024 – Dec 2024
-
-Sole developer on two client projects, managing everything from requirements to deployment.
-
-- **Construction Services Website** — Designed and developed a full-stack service website with a modern UI, custom backend, and lead capture functionality.
-
-- **House Removals Website** — Built a conversion-focused site enabling customers to easily browse services and make contact, handling both frontend and backend.
-`,
+  experience: {
+    title: "Work Experience",
+    sections: [
+      {
+        role: "Full Stack Web & Mobile Developer",
+        company: "Exeonic",
+        period: "Aug 2025 – Present",
+        details: [
+          "Developing and maintaining scalable web and mobile applications across the full stack.",
+          "Build cross-platform mobile apps optimized for performance and device compatibility.",
+          "Integrate RESTful APIs, authentication systems, and real-time features.",
+          "Collaborate with designers and developers to scope, plan, and deliver projects on schedule.",
+          "Continuously debug and performance-tune production applications.",
+        ],
+      },
+      {
+        role: "Full Stack Developer — Internship",
+        company: "Exeonic",
+        period: "May 2025 – Jul 2025",
+        details: [
+          "Contributed to live projects under senior developers, focusing on feature development, bug fixing, and performance improvements.",
+          "Participated in QA testing cycles and collaborated with the team to meet project deadlines.",
+        ],
+      },
+      {
+        role: "Freelance Full Stack Developer",
+        company: "Independent",
+        period: "Apr 2024 – Dec 2024",
+        details: [
+          "Sole developer on two client projects, managing everything from requirements to deployment.",
+          "Construction Services Website — Designed and developed a full-stack service website with a modern UI, custom backend, and lead capture functionality.",
+          "House Removals Website — Built a conversion-focused site enabling customers to easily browse services and make contact, handling both frontend and backend.",
+        ],
+      },
+    ],
+  },
   contact: {
     name: "MUHAMMAD ANAS MAHMOOD",
     address: "Nawab Town, no. 2, Street no 2 225 RB, Faisalabad, Punjab, Pakistan",

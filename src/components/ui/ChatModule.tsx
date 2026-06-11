@@ -92,7 +92,15 @@ type PortfolioData = {
   }
   projects: string
   clients: string
-  experience: string
+  experience: {
+    title: string
+    sections: {
+      role: string
+      company: string
+      period: string
+      details: string[]
+    }[]
+  }
   contact: {
     name: string
     address: string
@@ -313,7 +321,7 @@ const ChatModule = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed  inset-0 z-[9998] bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-9998 bg-black/50 backdrop-blur-sm"
         onClick={handleClose}
       />
 
@@ -322,7 +330,7 @@ const ChatModule = ({
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
-        className="fixed inset-0 z-[9999] flex justify-center"
+        className="fixed inset-0 z-9999 flex justify-center"
       >
         <div className="w-[80%] min-h-screen flex flex-col overflow-hidden bg-[#191919] shadow-2xl overflow-y-auto scrollbar-thin scrollbar-thumb-[#333] scrollbar-track-transparent">
           {/* ── Top bar ── */}
@@ -349,7 +357,7 @@ const ChatModule = ({
           {/* ── Scrollable chat area ── */}
           <div
             ref={scrollRef}
-            className="flex-1 px-6 py-5 flex flex-col gap-5 min-h-[350px] max-h-[52vh] overflow-y-auto scrollbar-none scrollbar-thumb-[#333] scrollbar-track-transparent"
+            className="flex-1 px-6 py-5 flex flex-col gap-5 min-h-87.5 max-h-[52vh] overflow-y-auto scrollbar-none scrollbar-thumb-[#333] scrollbar-track-transparent"
           >
             
             {messages.map((msg) => (
