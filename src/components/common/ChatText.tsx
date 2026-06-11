@@ -7,13 +7,17 @@ import {
   FaCode,
   FaCss3Alt,
   FaDatabase,
+  FaEnvelope,
+  FaFacebookF,
   FaFigma,
   FaGithub,
   FaGitAlt,
   FaHtml5,
+  FaInstagram,
   FaJs,
   FaLaptopCode,
   FaLayerGroup,
+  FaLinkedinIn,
   FaMagic,
   FaMapMarkerAlt,
   FaMobileAlt,
@@ -21,6 +25,7 @@ import {
   FaReact,
   FaRegHandshake,
   FaServer,
+  FaPhoneAlt,
   FaTerminal,
 } from "react-icons/fa"
 import {
@@ -58,13 +63,24 @@ type SkillContent = {
   summary: string
 }
 
+type ContactContent = {
+  name: string
+  address: string
+  phone: string
+  email: string
+  socials: {
+    label: string
+    url: string
+  }[]
+}
+
 type PortfolioData = {
   about: DetailedContent
   skills: SkillContent
   projects: string
   clients: string
   experience: string
-  contact: string
+  contact: ContactContent
   oneAwnser: string
 }
 
@@ -160,6 +176,68 @@ const getMessageSegments = (
           "mt-3 block rounded-xl border border-[#f5a623]/15 bg-[#f5a623]/[0.05] px-4 py-3 text-[13px] leading-6",
       },
     ]
+  }
+
+  if ("socials" in content) {
+    const contactIcons: Record<string, React.ReactNode> = {
+      address: <FaMapMarkerAlt />, 
+      phone: <FaPhoneAlt />,
+      email: <FaEnvelope />,
+      LinkedIn: <FaLinkedinIn />,
+      GitHub: <FaGithub />,
+      Facebook: <FaFacebookF />,
+      Instagram: <FaInstagram />,
+    }
+
+    const baseSegments = [
+      {
+        text: `${content.name}\n`,
+        className: "font-semibold text-white/90",
+      },
+      {
+        text: `Address: ${content.address}\n`,
+        prefix: (
+          <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+            {contactIcons.address}
+          </span>
+        ),
+        wrapperClassName: "flex items-center gap-2.5",
+      },
+      {
+        text: `Phone: ${content.phone}\n`,
+        prefix: (
+          <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+            {contactIcons.phone}
+          </span>
+        ),
+        wrapperClassName: "flex items-center gap-2.5",
+      },
+      {
+        text: `Email: ${content.email}\n`,
+        prefix: (
+          <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+            {contactIcons.email}
+          </span>
+        ),
+        wrapperClassName: "flex items-center gap-2.5",
+      },
+      {
+        text: "\nSocial Links:\n",
+        className: "font-semibold text-white/90",
+      },
+      ...content.socials.map((social) => ({
+        text: `${social.label}: ${social.url}\n`,
+        prefix: (
+          <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
+            {contactIcons[social.label] ?? <FaEnvelope />}
+          </span>
+        ),
+        className: "text-[12px] leading-none text-white/75",
+        wrapperClassName: "flex items-center  gap-2.5",
+      })),
+    ]
+
+    return baseSegments
   }
 
   const detailIcons = [

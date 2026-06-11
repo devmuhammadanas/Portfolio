@@ -93,7 +93,16 @@ type PortfolioData = {
   projects: string
   clients: string
   experience: string
-  contact: string
+  contact: {
+    name: string
+    address: string
+    phone: string
+    email: string
+    socials: {
+      label: string
+      url: string
+    }[]
+  }
   oneAwnser: string
   name: string
   role: string

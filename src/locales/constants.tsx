@@ -99,33 +99,60 @@ export const portfolioData = {
   },
   projects: "E-commerce App...",
   clients: "Worked with 10+ clients...",
-  experience: ` Experience
+  experience: `### Work Experience
 
-I have 1.5+ years of experience as a Full-Stack Web & Mobile Developer, building responsive web applications and cross-platform mobile apps. I have worked with development teams and clients to deliver scalable solutions using React, Next.js, React Native, Node.js, and MongoDB.
+---
 
-My experience includes developing user-friendly interfaces, integrating APIs, implementing authentication systems, optimizing application performance, and building complete products from concept to deployment. I've contributed to both company projects and freelance work, focusing on creating reliable, high-quality digital experiences.`,
-  contact: "anas@gmail.com",
-//   contact: `
-//   MUHAMMAD ANAS MAHMOOD
-//   Address:Nawab Town, no. 2, Street no 2 225 RB,
-//   Faisalabad, Punjab, Pakistan
-//   Phone: +92 318 6198928
-//   Email: developer.muhammadanas@gmail.com
+#### Full Stack Web & Mobile Developer
 
-//   Social links 
+**Exeonic** · Aug 2025 – Present
 
-// https://www.linkedin.com/in/dev-muhammadanas/
-// https://github.com/devmuhammadanas
-// https://www.facebook.com/dev.muhamadanas/
-// https://www.instagram.com/dev.muhammadanas/
-//   `,
-  // contact: {
-  //   name: "MUHAMMAD ANAS MAHMOOD",
-  //   address: 'Address:Nawab Town, no. 2, Street no 2 225 RB, Faisalabad, Punjab, Pakistan',
-  //   phone: 'Phone: +92 318 6198928',
-  //   email: 'Email: developer.muhammadanas@gmail.com'
+Developing and maintaining scalable web and mobile applications across the full stack. Build cross-platform mobile apps optimized for performance and device compatibility. Integrate RESTful APIs, authentication systems, and real-time features. Collaborate with designers and developers to scope, plan, and deliver projects on schedule. Continuously debug and performance-tune production applications.
 
-  // },
+---
+
+#### Full Stack Developer — Internship
+
+**Exeonic** · May 2025 – Jul 2025
+
+Contributed to live projects under senior developers, focusing on feature development, bug fixing, and performance improvements. Participated in QA testing cycles and collaborated with the team to meet project deadlines.
+
+---
+
+#### Freelance Full Stack Developer
+
+**Independent** · Apr 2024 – Dec 2024
+
+Sole developer on two client projects, managing everything from requirements to deployment.
+
+- **Construction Services Website** — Designed and developed a full-stack service website with a modern UI, custom backend, and lead capture functionality.
+
+- **House Removals Website** — Built a conversion-focused site enabling customers to easily browse services and make contact, handling both frontend and backend.
+`,
+  contact: {
+    name: "MUHAMMAD ANAS MAHMOOD",
+    address: "Nawab Town, no. 2, Street no 2 225 RB, Faisalabad, Punjab, Pakistan",
+    phone: "+92 318 6198928",
+    email: "developer.muhammadanas@gmail.com",
+    socials: [
+      {
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/dev-muhammadanas/",
+      },
+      {
+        label: "GitHub",
+        url: "https://github.com/devmuhammadanas",
+      },
+      {
+        label: "Facebook",
+        url: "https://www.facebook.com/dev.muhamadanas/",
+      },
+      {
+        label: "Instagram",
+        url: "https://www.instagram.com/dev.muhammadanas/",
+      },
+    ],
+  },
   oneAwnser:
     "Sorry, I didn't catch that. Try asking about About Me, Skills, Projects, Clients, or Contact.",
   name: "Muhammad Anas",
