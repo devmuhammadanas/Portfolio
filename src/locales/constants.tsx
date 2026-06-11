@@ -104,21 +104,21 @@ export const portfolioData = {
 I have 1.5+ years of experience as a Full-Stack Web & Mobile Developer, building responsive web applications and cross-platform mobile apps. I have worked with development teams and clients to deliver scalable solutions using React, Next.js, React Native, Node.js, and MongoDB.
 
 My experience includes developing user-friendly interfaces, integrating APIs, implementing authentication systems, optimizing application performance, and building complete products from concept to deployment. I've contributed to both company projects and freelance work, focusing on creating reliable, high-quality digital experiences.`,
-  // contact: "anas@gmail.com",
-  contact: `
-  MUHAMMAD ANAS MAHMOOD
-  Address:Nawab Town, no. 2, Street no 2 225 RB,
-  Faisalabad, Punjab, Pakistan
-  Phone: +92 318 6198928
-  Email: developer.muhammadanas@gmail.com
+  contact: "anas@gmail.com",
+//   contact: `
+//   MUHAMMAD ANAS MAHMOOD
+//   Address:Nawab Town, no. 2, Street no 2 225 RB,
+//   Faisalabad, Punjab, Pakistan
+//   Phone: +92 318 6198928
+//   Email: developer.muhammadanas@gmail.com
 
-  Social links 
+//   Social links 
 
-https://www.linkedin.com/in/dev-muhammadanas/
-https://github.com/devmuhammadanas
-https://www.facebook.com/dev.muhamadanas/
-https://www.instagram.com/dev.muhammadanas/
-  `,
+// https://www.linkedin.com/in/dev-muhammadanas/
+// https://github.com/devmuhammadanas
+// https://www.facebook.com/dev.muhamadanas/
+// https://www.instagram.com/dev.muhammadanas/
+//   `,
   // contact: {
   //   name: "MUHAMMAD ANAS MAHMOOD",
   //   address: 'Address:Nawab Town, no. 2, Street no 2 225 RB, Faisalabad, Punjab, Pakistan',
