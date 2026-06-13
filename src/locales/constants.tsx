@@ -97,7 +97,11 @@ export const portfolioData = {
     summary:
       "I use modern technologies to build fast, scalable, and user-friendly web and mobile applications, with a strong focus on performance, clean code, and great user experiences.",
   },
-  projects: "E-commerce App...",
+  projects: `Sure! Let me show you my projects.
+
+Explore a collection of web and mobile applications I've built, featuring modern UI/UX, responsive design, and scalable full-stack solutions.`,
+projectPageMoveBotton: 'See All Projects',
+
   clients: "Worked with 10+ clients...",
   experience: {
     title: "Work Experience",

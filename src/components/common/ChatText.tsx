@@ -2,6 +2,7 @@
 
 import { portfolioData } from "@/src/locales/constants"
 import Image from "next/image"
+import Link from "next/link"
 import {
   FaAngleRight,
   FaBootstrap,
@@ -29,6 +30,7 @@ import {
   FaServer,
   FaPhoneAlt,
   FaTerminal,
+  FaArrowRight,
 } from "react-icons/fa"
 import {
   SiAntdesign,
@@ -458,6 +460,19 @@ export const ChatText = ({
               ButtonBorder={true}
               onSelectTopic={onSelectTopic}
             />
+          </div>
+        )}
+        {message.topic === "projects" && (
+          <div className="mt-5">
+            <Link
+              href="/projects"
+              className="group relative overflow-hidden flex items-center gap-2 inline-block px-7 py-2.5 font-unbounded rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl bg-secondary text-primary border-secondary border text-[14px] leading-5 font-normal"
+            >
+              <span className="flex justify-center items-center gap-2">{portfolioData.projectPageMoveBotton}
+
+                 <FaArrowRight className="text-md mt-0.5" />
+              </span>
+            </Link>
           </div>
         )}
       </div> 
