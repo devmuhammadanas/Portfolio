@@ -70,23 +70,61 @@ import SearchBar from './SearchBar'
 import Footer from './Footer'
 import { TypingIndicator } from '../common/TypingIndicator'
 import { ChatText } from '../common/ChatText'
+import Image from 'next/image'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type PortfolioData = {
-  about: string
-  skills: string
+  about: {
+    title?: string
+    intro?: string
+    detailsTitle?: string
+    basicDetails?: string[]
+    basicInfoTitle?: string
+    basicInfo?: string
+  }
+  skills: {
+    sections: {
+      title: string
+      items: string[]
+    }[]
+    summary: string
+  }
   projects: string
   clients: string
-  experience: string
-  contact: string
+  experience: {
+    title: string
+    sections: {
+      role: string
+      company: string
+      period: string
+      details: string[]
+    }[]
+  }
+  contact: {
+    name: string
+    address: string
+    phone: string
+    email: string
+    socials: {
+      label: string
+      url: string
+    }[]
+  }
+  oneAwnser: string
+  name: string
+  role: string
+  shortName: string
+  hideModule: string
 }
+
+export type ChatTopic = 'about' | 'skills' | 'projects' | 'clients' | 'experience' | 'contact'
 
 type ChatModuleProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  selectedTopic: keyof PortfolioData
-  setSelectedTopic: React.Dispatch<React.SetStateAction<keyof PortfolioData>>
+  selectedTopic: ChatTopic
+  setSelectedTopic: React.Dispatch<React.SetStateAction<ChatTopic>>
   portfolioData: PortfolioData
   avatarUrl?: string          // optional real avatar image
   initialInput?: string       // optional input to process on open
@@ -95,15 +133,15 @@ type ChatModuleProps = {
 
 type ChatMessage = {
   id: string
-  topic: keyof PortfolioData
+  topic: ChatTopic
   label: string
-  content: string
+  content: PortfolioData[keyof PortfolioData]
 }
 
 // ─── Nav Items ────────────────────────────────────────────────────────────────
 
 const navItems: {
-  value: keyof PortfolioData
+  value: ChatTopic
   label: string
   icon: React.ElementType
 }[] = [
@@ -133,7 +171,9 @@ const ChatModule = ({
 
   // Seed the initial message when modal opens
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (!isOpen || messages.length !== 0) return
+
+    const seedTimer = setTimeout(() => {
       // If initialInput is provided, process it instead of showing the topic
       if (initialInput && initialInput.trim()) {
         const trimmed = initialInput.trim().toLowerCase()
@@ -157,6 +197,7 @@ const ChatModule = ({
               },
             ])
             setIsTyping(false)
+            setInitialInput?.('')
           }, 900)
         } else {
           // Show error message for non-matching input
@@ -171,12 +212,8 @@ const ChatModule = ({
               },
             ])
             setIsTyping(false)
+            setInitialInput?.('')
           }, 700)
-        }
-        
-        // Clear initial input after processing
-        if (setInitialInput) {
-          setInitialInput('')
         }
       } else {
         // Default behavior - show the selected topic
@@ -190,17 +227,25 @@ const ChatModule = ({
           },
         ])
       }
-    }
-  }, [isOpen])
+    }, 0)
 
-  // Reset when closed
-  useEffect(() => {
-    if (!isOpen) {
-      setMessages([])
-      setIsTyping(false)
-      setInputValue('')
-    }
-  }, [isOpen])
+    return () => clearTimeout(seedTimer)
+  }, [
+    initialInput,
+    isOpen,
+    messages.length,
+    portfolioData,
+    selectedTopic,
+    setInitialInput,
+    setSelectedTopic,
+  ])
+
+  const handleClose = () => {
+    setIsOpen(false)
+    setMessages([])
+    setIsTyping(false)
+    setInputValue('')
+  }
 
   // Auto-scroll to bottom on new message
   useEffect(() => {
@@ -212,7 +257,7 @@ const ChatModule = ({
     }
   }, [messages, isTyping])
 
-  const handleTopicClick = (topic: keyof PortfolioData) => {
+  const handleTopicClick = (topic: ChatTopic) => {
     // Don't re-add the same topic that was just added
     const last = messages[messages.length - 1]
     if (last?.topic === topic && isTyping === false) {
@@ -276,8 +321,8 @@ const ChatModule = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed  inset-0 z-[9998] bg-black/50 backdrop-blur-sm"
-        onClick={() => setIsOpen(false)}
+        className="fixed inset-0 z-9998 bg-black/50 backdrop-blur-sm"
+        onClick={handleClose}
       />
 
       {/* Modal — matches the reference image: centered card, rounded, dark */}
@@ -285,7 +330,7 @@ const ChatModule = ({
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
-        className="fixed inset-0 z-[9999] flex justify-center"
+        className="fixed inset-0 z-9999 flex justify-center"
       >
         <div className="w-[80%] min-h-screen flex flex-col overflow-hidden bg-[#191919] shadow-2xl overflow-y-auto scrollbar-thin scrollbar-thumb-[#333] scrollbar-track-transparent">
           {/* ── Top bar ── */}
@@ -293,7 +338,7 @@ const ChatModule = ({
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-full bg-[#f5a623]/20 border border-[#f5a623]/40 overflow-hidden flex items-center justify-center">
                 {avatarUrl ? (
-                  <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                  <Image src={avatarUrl} width={100} height={100} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-[#f5a623] text-[9px] font-bold">{portfolioData.shortName}</span>
                 )}
@@ -302,7 +347,7 @@ const ChatModule = ({
             </div>
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="text-white/25 hover:text-white/70 text-xs transition-colors"
             >
               {portfolioData.hideModule}
@@ -312,11 +357,22 @@ const ChatModule = ({
           {/* ── Scrollable chat area ── */}
           <div
             ref={scrollRef}
-            className="flex-1 px-6 py-5 flex flex-col gap-5 min-h-[350px] max-h-[52vh] overflow-y-auto scrollbar-none scrollbar-thumb-[#333] scrollbar-track-transparent"
+            className="flex-1 px-6 py-5 flex flex-col gap-5 min-h-87.5 max-h-[52vh] overflow-y-auto scrollbar-none scrollbar-thumb-[#333] scrollbar-track-transparent"
           >
             
             {messages.map((msg) => (
-              <ChatText key={msg.id} message={msg} avatarUrl={avatarUrl} />
+              <ChatText
+                key={msg.id}
+                message={msg}
+                avatarUrl={avatarUrl}
+                onSelectTopic={handleTopicClick}
+                onTypingProgress={() => {
+                  scrollRef.current?.scrollTo({
+                    top: scrollRef.current.scrollHeight,
+                    behavior: 'smooth',
+                  })
+                }}
+              />
             ))}
             {isTyping && <TypingIndicator />}
           </div>

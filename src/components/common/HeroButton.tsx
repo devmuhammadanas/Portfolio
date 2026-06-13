@@ -1,15 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { portfolioData } from '@/src/locales/constants'
-import ChatModule from '../ui/ChatModule'
+import type { ChatTopic } from '../ui/ChatModule'
 
 type HeroButtonProps = {
   text: string
   backGround?: boolean
   textColor?: string
   ButtonBorder?: boolean
-  sectionType: string
+  sectionType: ChatTopic
+  onSelectTopic?: (topic: ChatTopic) => void
 }
 
 const HeroButton = ({
@@ -18,19 +17,14 @@ const HeroButton = ({
   textColor,
   ButtonBorder = true,
   sectionType,
+  onSelectTopic,
 }: HeroButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedTopic, setSelectedTopic] = useState<keyof typeof portfolioData>(
-    sectionType as keyof typeof portfolioData
-  )
-
   return (
     <>
       <button
         type="button"
         onClick={() => {
-          setIsOpen(true)
-          setSelectedTopic(sectionType as keyof typeof portfolioData)
+          onSelectTopic?.(sectionType)
         }}
         className={`${
           backGround ? 'bg-secondary' : 'bg-none'
@@ -43,13 +37,6 @@ const HeroButton = ({
           {text}
         </span>
       </button>
-      <ChatModule
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        selectedTopic={selectedTopic}
-        setSelectedTopic={setSelectedTopic}
-        portfolioData={portfolioData}
-      />
     </>
   )
 }
