@@ -340,14 +340,15 @@ const getMessageSegments = (
         className: "font-semibold text-white/90",
       },
       ...content.socials.map((social) => ({
-        text: `${social.label}: ${social.url}\n`,
+        text: `${social.label}: ${social.url}`,
+        href: social.url,
         prefix: (
           <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/15 text-[11px] text-[#f5a623]">
             {contactIcons[social.label] ?? <FaEnvelope />}
           </span>
         ),
-        className: "text-[12px] leading-none text-white/75",
-        wrapperClassName: "flex items-center  gap-2.5",
+        className: "text-[12px] leading-none text-white/75 underline decoration-[#f5a623]/40 hover:text-white",
+        wrapperClassName: "flex items-center gap-2.5",
       })),
     ]
 

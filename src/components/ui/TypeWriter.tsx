@@ -8,6 +8,7 @@ export type TypeWriterSegment = {
   className?: string;
   prefix?: ReactNode;
   wrapperClassName?: string;
+  href?: string;
 };
 
 export default function TypeWriter({
@@ -62,12 +63,35 @@ export default function TypeWriter({
       {visibleSegments.map((segment, index) => {
         if (!segment.text) return null;
 
+        const content = segment.href ? (
+          <a
+            href={segment.href}
+            target="_blank"
+            rel="noreferrer"
+            className={segment.className}
+          >
+            {segment.text}
+          </a>
+        ) : (
+          <span className={segment.className}>{segment.text}</span>
+        );
+
         return (
           segment.prefix || segment.wrapperClassName ? (
             <span key={index} className={segment.wrapperClassName}>
               {segment.prefix}
-              <span className={segment.className}>{segment.text}</span>
+              {content}
             </span>
+          ) : segment.href ? (
+            <a
+              key={index}
+              href={segment.href}
+              target="_blank"
+              rel="noreferrer"
+              className={segment.className}
+            >
+              {segment.text}
+            </a>
           ) : (
             <span key={index} className={segment.className}>
               {segment.text}
